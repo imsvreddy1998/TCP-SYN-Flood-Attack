@@ -145,6 +145,119 @@ This deliverable would discuss TCP SYN Flood Attacks and demonstrate how to laun
 
 <p align="justify" > By following these steps, you'll have successfully installed Metasploit Framework on your Kali Linux system, enabling you to leverage its powerful features for ethical hacking and security testing purposes.</p>
 
+<p align="justify" > Once Metasploit Framework is installed on your Kali Linux system, you gain access to a powerful suite of tools and modules for conducting security assessments and penetration tests. Among its capabilities is the ability to understand and simulate various types of network attacks, including the <b>TCP SYN Flood attack</b>. By delving into the specifics of how Metasploit facilitates such attacks, you'll gain valuable insights into both offensive and defensive strategies in the realm of cybersecurity.</p>
+
+## Understanding the SYN Flood Attack in Metasploit
+
+<p align="justify" > Metasploit Framework provides a comprehensive platform for not only exploiting vulnerabilities but also for simulating and understanding various types of network attacks, including the TCP SYN Flood attack. Within Metasploit, the SYN Flood attack is typically conducted using auxiliary modules designed specifically for this purpose.</p>
+
+<p align="justify" > By exploring these modules and their functionalities, users can gain a deeper understanding of how the SYN Flood attack operates, its impact on target systems, and the techniques used to mitigate such attacks. Additionally, Metasploit allows users to customize parameters such as target IP addresses, port numbers, and packet rates, enabling them to tailor the attack to specific scenarios and environments.</p>
+
+<p align="justify" > Understanding the SYN Flood attack in Metasploit provides valuable insights into the mechanisms of denial-of-service (DoS) attacks, enhances knowledge of network security, and equips security professionals with the skills necessary to defend against such threats effectively.</p>
+
+## Identifying the target
+
+<p align="justify" > Before launching a TCP SYN Flood attack using Metasploit, it's crucial to identify the target system or network. The target could be a specific IP address, domain name, or a range of IP addresses representing a network segment. I am using <b>testphp.vulnweb.com</b> as my victim in this case.</p>
+
+<p align="justify" > By accurately identifying the target system or network, you can effectively focus your efforts and ensure that the TCP SYN Flood attack is conducted in a controlled and responsible manner.</p>
+
+## Launching the Attack
+
+<p align="justify" > Once I have identified the target system and prepared the necessary parameters, launching a TCP SYN Flood attack using Metasploit involves executing the appropriate auxiliary module with the desired configurations. Here's a step-by-step guide:</p>
+
+<b> 1. Determine the IP Address for the Hostname:</b>
+<ul>
+<li> 
+ Use the <b>ping </b> command to find the IP Address of the hostname: testphp.vulnweb.com in the terminal. 
+</li> 
+</ul>
+
+          ping testphp.vulnweb.com
+
+<p align="justify" > Here, The ping command sends an ICMP (Internet Control Message Protocol) packet to a networked computer. If you try to ping a hostname, the ping program performs a DNS request to discover the host's IP address. The IP address is displayed in the command output.</p>
+
+![image](https://github.com/imsvreddy1998/TCP-SYN-Flood-Attack/assets/124395648/d6e9641d-582d-4bf1-bf41-60f75593095c)
+
+So, now I know the victim’s <b>IP address: 44.228.249.3</b> and then Launch the metasploit.
+
+<b> 2. Open Metasploit Console:</b>
+<ul>
+ <li> Launch the Metasploit console by typing <b>msfconsole</b> in the Kali Linux terminal.</li>
+</ul>
+
+<b> 3. Search for SYN Flood Module:</b>
+<ul>
+ <li> Use the <b>"search</b> command to find the SYN Flood auxiliary module. You can search for it using keywords like "synflood" or "dos."</li>
+</ul>
+
+![image](https://github.com/imsvreddy1998/TCP-SYN-Flood-Attack/assets/124395648/2f1e39d3-9799-4d90-8746-d8eaea90edab)
+
+<b> 4. Select the Module:</b>
+<ul>
+ <li> Once you've identified the IP address for the target hostname, use the <b>"use"</b> command to select it. Make sure to note the module's name and path by running the following command.</li>
+</ul>
+
+         Msf6 > use auxiliary/dos/tcp/synflood
+         Msf6 > show options
+
+ 
+<b> 5. View Module Options:</b>
+<ul>
+ <li> Display the available options for the selected module using the <b>"show options"</b> command. This will show you the parameters that need to be configured before launching the attack.</li>
+ <li> Now, I can now view the options that are available for setting.</li>
+</ul>
+
+![image](https://github.com/imsvreddy1998/TCP-SYN-Flood-Attack/assets/124395648/5ca573da-01cb-4c61-aa2e-53235364375b)
+
+<ul>
+ <li> To set an option just I have to type set and the option name. I have the following two main options to set.</li>
+</ul>
+
+<ol>
+ <li> RHOST = Target IP Address</li>
+ <li> RPORT = Target Port Address</li>
+</ol>
+
+![image](https://github.com/imsvreddy1998/TCP-SYN-Flood-Attack/assets/124395648/d74698cd-637b-4c99-b934-daac5ca8f2fa)
+
+
+<b> 6. Set Target IP and Port:</b>
+<ul>
+ <li> Use the <b>"set"</b> command to specify the target IP address and port number by running following commands. These parameters define the destination of the SYN Flood attack.</li>
+
+             set RHOST 44.228.249.3
+             set RPORT 80
+</ul>
+
+![image](https://github.com/imsvreddy1998/TCP-SYN-Flood-Attack/assets/124395648/3c02588f-5f25-4c5e-bc7b-a8d853473db2)
+
+
+<b> 7. Verify Settings:</b>
+<ul>
+ <li> Double-check the configured settings using the <b>"show options"</b> command to ensure that everything is set up correctly.</li>
+</ul>
+
+<b> 8. Launch the Attack:</b>
+<ul>
+ <li> Once all parameters are configured, you can launch the SYN Flood attack by typing <b>"exploit"</b> or <b>"run"</b> in the console.</li>
+</ul>
+
+![image](https://github.com/imsvreddy1998/TCP-SYN-Flood-Attack/assets/124395648/82fc7107-f944-4249-a43e-71cf039f26d4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
