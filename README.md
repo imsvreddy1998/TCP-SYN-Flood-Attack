@@ -325,7 +325,7 @@ The TCP SYN Flood attack can be analyzed using Wireshark, where I need to captur
 <p align="justify" > I noticed a console logs for a TCP SYN Flood Attack from source address: 247.222.184.68 towards the destination address: 44.228.249.3 on destination port 80 in the environment. The following are the event details for reference:
 </p>
 
-<h3> Event Details</h3>
+<h4> Event Details</h4>
 
 
 
