@@ -197,8 +197,8 @@ So, now I know the victim’s <b>IP address: 44.228.249.3</b> and then Launch th
  <li> Once you've identified the IP address for the target hostname, use the <b>"use"</b> command to select it. Make sure to note the module's name and path by running the following command.</li>
 </ul>
 
-         Msf6 > use auxiliary/dos/tcp/synflood
-         Msf6 > show options
+         msf6 > use auxiliary/dos/tcp/synflood
+         msf6 > show options
 
  
 <b> 5. View Module Options:</b>
@@ -325,7 +325,137 @@ The TCP SYN Flood attack can be analyzed using Wireshark, where I need to captur
 <p align="justify" > I noticed a console logs for a TCP SYN Flood Attack from source address: 247.222.184.68 towards the destination address: 44.228.249.3 on destination port 80 in the environment. The following are the event details for reference:
 </p>
 
-<h4> Event Details</h4>
+<h4><b>Event Details:</b></h4>
+
+<table>
+  <tr>
+    <th>Source Address (Src IP)</th>
+    <th>247.222.184.68 </th>
+  </tr>
+ <tr>
+   <th> Destination Address (Dst IP)</th>
+   <th> 44.228.249.3 (Amazon.com Inc.)</th>
+  </tr>
+  <tr>
+   <th> Source Port (SPort)</th>
+   <th> 55376, 55812 and many </th>
+  </tr>
+ <tr>
+  <th> Destination Port (Dport)</th>
+  <th> 80</th>
+ </tr>
+</table>
+
+<h4><b>Event Analysis:</b></h4>
+
+<p align="justify" > I could observe the <b>4500+</b> hits of outbound traffic from <b>Src: 247.222.184.68</b> towards  <b>Dst: 44.228.249.3</b> on <b>port 80</b> in the environment. The traffic has been analyzed with the help of <b>wireshark</b>. Majority of the traffic was initiated from the attacker over the protocols TCP  with the severity of <b>Note</b> and <b>Chat</b>. The Flags were captured as <b>SYN</b>. The connection establish request SYN was initiated between the session initiator and the session responder by transmitting a higher number of bytes where the traffic has been categorized under the severity level of Chat. The conversation completeness between the source and destination is <b>incomplete</b>. The <b>external address: 44.228.249.3</b> belongs to <b>amazon.com</b> domain with the usage type of <b>Data Center/Web Hosting/Transit</b>. As per several detection engines, the <b>external address: 44.228.249.3</b> has a <b>clean reputation</b>. </p>
+
+![image](https://github.com/imsvreddy1998/TCP-SYN-Flood-Attack/assets/124395648/88889b53-1720-44fb-bd40-eb14b64180be)
+
+<p align="justify" > But right away, I should be able to identify the beginning of the attack by a huge flood of TCP traffic. I can filter for SYN packets without an acknowledgment using the following filter:  <b>tcp.flags.syn == 1 and tcp.flags.ack == 0</b> </p>
+
+![image](https://github.com/imsvreddy1998/TCP-SYN-Flood-Attack/assets/124395648/9d958e96-c841-499a-9e5c-d569f57bbd1f)
+
+<p align="justify" > If you look at the summary of conversations in wireshark though, there are many single SYN packet requests from 247.222.184.68 with a destination port 80 (HTTP). Eventually, an attacker or source address: 247.222.184.68 can quickly exhaust a target's : 44.228.249.3  resources by bombarding it with SYN packets and not answering (ACK). The server will then be unable to fulfill valid client requests, which will ultimately result in a Denial-of-Service attack.</p>
+
+<p align="justify" > By analyzing the attack using Wireshark, you can gain valuable insights into the behavior of the TCP SYN Flood attack and its impact on the target system's network traffic. This information can be instrumental in understanding the attack's effectiveness, identifying potential vulnerabilities, and devising mitigation strategies.</p>
+
+## Actions Taken
+
+<p align="justify" >I have been going through the logs in the console and taking actions to analyze whether to check the alert for connections from source address to destination address on destination port from collected logs. If the traffic was suspicious, the following actions would be recommended to prevent threats and notify the Internet Service Provider.</p>
+
+<b> Perimeter Security Team:</b>
+<ul>
+<li> Check the traffic from source addresses in security devices such as Palo Alto, Checkpoint and many more. If allowed, validating those traffic to block from IP addresses that are involved in the attack. In addition to this, block the IOCs. 
+</li>
+</ul>
+
+<b> Endpoint Security Team:</b>
+<ul>
+ <li> Ensuring the Anti Virus has the latest definition installed on a target and initiates the full system scan in the infected host to remove the infections.</li>
+ <li> Check and update the latest patches for browsers.</li>
+ <li> Investigating for further risk detection on the host recently and removing unwanted plugins from the browser. </li>
+</ul>
+
+<b> Server Team:</b>
+<ul>
+ <li> Check for the application/process/adds-on/extension creating such traffic and uninstall/remove those if there is no business requirement and ensure all the servers are with the latest security patch wrt operating System. </li>
+</ul>
+
+## Mitigation and Defense
+
+<p align="justify" > Mitigating and defending against TCP SYN Flood attacks is essential for maintaining the availability and security of network services. Here are several strategies to mitigate and defend against such attacks:</p>
+
+<b> 1. Implement Rate Limiting:</b>
+<ul>
+ <li> Configure network devices, such as firewalls and routers, to limit the rate of incoming SYN packets from a single source. This helps prevent SYN Flood attacks by reducing the impact of excessive connection requests.</li>
+</ul>
+
+<b> 2. Utilize SYN Cookies:</b>
+
+<ul>
+<li>Enable SYN cookies on servers and network devices. SYN cookies are a mechanism that allows a server to handle connection requests without maintaining state information until the three-way handshake is completed, thereby mitigating SYN Flood attacks.</li>
+</ul>
+
+<b> 3. Deploy Intrusion Detection and Prevention Systems (IDPS):</b>
+
+<ul>
+<li>Implement IDPS solutions that can detect and block SYN Flood attacks in real-time. These systems analyze network traffic patterns and behavior to identify and mitigate malicious activities, including abnormal SYN packet rates.</li>
+</ul>
+
+<b> 4. Enable Connection Rate Limiting:</b>
+
+<ul>
+<li>Configure servers and network devices to enforce connection rate limits for incoming SYN packets. This helps prevent SYN Flood attacks by restricting the number of simultaneous connections from a single source IP address.</li>
+</ul>
+
+<b>5. Implement Network and Application Layer Defenses:</b>
+
+<ul>
+<li>Deploy network and application layer defenses, such as load balancers, web application firewalls (WAFs), and intrusion prevention systems (IPS), to filter and mitigate malicious SYN packets before they reach the target servers.</li>
+</ul>
+
+<b>6. Use Content Delivery Networks (CDNs):</b>
+
+<ul>
+<li>Utilize CDNs to distribute incoming traffic across multiple servers and data centers. CDNs can absorb and mitigate SYN Flood attacks by distributing the attack traffic and filtering out malicious requests before reaching the origin servers.</li>
+</ul>
+
+<b>7. Monitor and Analyze Network Traffic:</b>
+
+<ul>
+<li>Continuously monitor network traffic using tools like Wireshark, intrusion detection systems (IDS), and security information and event management (SIEM) solutions. Analyze network anomalies and suspicious patterns to detect and respond to SYN Flood attacks promptly.</li>
+</ul>
+
+<b>8. Perform Regular Security Audits and Testing:</b>
+
+<ul>
+<li>Conduct regular security audits and penetration tests to identify and address vulnerabilities that could be exploited in SYN Flood attacks. Test the effectiveness of mitigation measures and update defense strategies accordingly.</li>
+</ul>
+
+<b>9. Educate and Train Personnel:</b>
+
+<ul>
+<li>Educate network administrators, system operators, and other personnel about SYN Flood attacks and best practices for mitigating and defending against them. Provide training on recognizing and responding to security incidents effectively.</li>
+</ul>
+
+<p align="justify" >By implementing these mitigation and defense strategies, organizations can strengthen their resilience against TCP SYN Flood attacks and safeguard their network infrastructure and services from disruption and unauthorized access.</p>
+
+## Conclusion
+
+<p align="justify" >TCP SYN Flood attacks pose a significant threat to network availability and security, capable of disrupting services and causing downtime for organizations. However, by understanding the mechanics of these attacks and implementing appropriate mitigation and defense strategies, it's possible to reduce the risk of exploitation and minimize the impact on network operations.</p>
+
+<p align="justify" >To sum up, I used the wireshark tools, one of the greatest network security tools, to examine the traffic.  While looking over the packet capture file, I was able to identify the beginning of the attack by a huge flood of TCP traffic. Eventually, The server will then be unable to fulfill valid client requests, which will ultimately result in a Denial-of-Service attack. Reassigning this incident to respective teams for blocking the suspicious external address, URLs, patching the servers and updating the operating system, all precautionary measures were taken to safeguard against threats.</p>
+
+<p align="justify" >In this project, I have explored the process of launching and defending against TCP SYN Flood attacks, leveraging tools like <b>Metasploit Framework for offensive purposes and Wireshark for analysis</b>. By following <b>best practices such as rate limiting, SYN cookie usage, and intrusion detection,</b> organizations can fortify their defenses against SYN Flood attacks and enhance their overall security posture. </p>
+
+<p align="justify" >It's crucial for organizations to remain vigilant and proactive in monitoring network traffic, identifying anomalies, and responding promptly to potential threats. Regular security audits, testing, and employee training are essential components of a comprehensive cybersecurity strategy aimed at mitigating the risks posed by SYN Flood attacks and other forms of cyber threats. </p>
+
+<p align="justify" >By staying informed, implementing robust security measures, and fostering a culture of security awareness, organizations can effectively defend against TCP SYN Flood attacks and maintain the availability, integrity, and confidentiality of their network resources. Through ongoing diligence and collaboration, we can collectively work towards a safer and more resilient digital landscape. </p>
+
+
+
+
 
 
 
