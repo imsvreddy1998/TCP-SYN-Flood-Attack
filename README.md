@@ -242,20 +242,90 @@ So, now I know the victim’s <b>IP address: 44.228.249.3</b> and then Launch th
  <li> Once all parameters are configured, you can launch the SYN Flood attack by typing <b>"exploit"</b> or <b>"run"</b> in the console.</li>
 </ul>
 
-![image](https://github.com/imsvreddy1998/TCP-SYN-Flood-Attack/assets/124395648/82fc7107-f944-4249-a43e-71cf039f26d4)
+![image](https://github.com/imsvreddy1998/TCP-SYN-Flood-Attack/assets/124395648/44228349-f174-4504-9340-29e5d766804f)
+
+
+<b> 8. Monitor the Attack:</b>
+<ul>
+ <li> Keep an eye on the console output to monitor the progress of the attack. Metasploit will display information about the number of packets sent, target responses, and any errors encountered.</li>
+</ul>
+
+<b> 8. End of the Attack:</b>
+<ul>
+ <li> To stop the attack, simply press <b>"Ctrl + C"</b> in the terminal running Metasploit. This will halt the execution of the module and terminate the SYN Flood attack.</li>
+</ul>
 
 
 
+## Analyzing a TCP SYN Flood Attack Using Wireshark: Capturing and Understanding Network Traffic
 
+The TCP SYN Flood attack can be analyzed using Wireshark, where I need to capture network traffic while the attack is ongoing. Here's how I have analyzed:
 
+<b> 1. Launch Wireshark:</b>
+<ul>
+ <li> I have opened Wireshark on the system. I ran it with administrative privileges depending on your operating system.</li>
+</ul>
 
+<b> 2. Select Network Interface:</b>
+<ul> 
+<li> I chose the network interface that was connected to the same network segment as the target system. This ensures that Wireshark captures traffic related to the attack.</li>
+</ul>
 
+<b> 3. Start Capture:</b>
+<ul>
+<li> Clicked on the "Start" button or the capture icon to begin capturing network traffic.</li>
+</ul>
 
+<b> 4. Execute the Attack:</b>
+<ul>
+<li>While Wireshark is capturing packets, I launched the TCP SYN Flood attack using Metasploit as described earlier.</li>
+</ul>
 
+<b> 5. Analyze Packets:</b>
+<ul> 
+<li>As the attack progresses, Wireshark will capture and display packets exchanged between the attacker/source and the target/destination system. So, I have focused on packets related to TCP SYN requests and responses.</li>
+</ul>
 
+<b> 6. Filter Packets:</b>
+<ul>
+<li>I have used Wireshark's filtering capabilities to isolate packets relevant to the attack by applying filters such as tcp.flags.syn == 1 to display only TCP SYN packets as shown in below figure.</li>
+</ul>
 
+![image](https://github.com/imsvreddy1998/TCP-SYN-Flood-Attack/assets/124395648/56725afd-d5ea-46c6-9f64-174866a3ff79)
 
+<b> 7. Observe Patterns:</b>
+<ul>
+<li> I have analyzed the captured packets to observe patterns indicative of a SYN Flood attack. Looked for a high volume of TCP SYN packets sent to the target/destination system (44.228.249.3) without corresponding SYN-ACK responses.</li>
+</ul>
 
+<b> 8. Identify Sources:</b>
+<ul>
+<li> The source IP addresses (247.222.184.68) of the packets involved in the attack. This helps me to identify the origin of the attack traffic.</li>
+</ul>
+
+<b> 9. Review Attack Impact:</b>
+<ul>
+<li> Assessed the impact of the attack on the target system by analyzing its responses to the flood of TCP SYN packets. Addition to this, I have looked for signs of service degradation, unresponsiveness, or resource exhaustion.</li>
+</ul>
+
+<b> 10. Stop Capture:</b>
+<ul>
+<li> Once I've collected sufficient data for analysis, stopped the packet capture in Wireshark.</li>
+</ul>
+
+<b> 11. Save and Export Data:</b>
+<ul>
+<li> At last, I have saved the captured packets in Wireshark's native format (PCAP) for further analysis or you can export them to a different format if needed.</li>
+</ul>
+
+## Analysis
+
+<p align="justify" > I have examined the attack by gathering logs from multiple technologies and doing packet capture with the aid of the wireshark tool.</p>
+
+<p align="justify" > I noticed a console logs for a TCP SYN Flood Attack from source address: 247.222.184.68 towards the destination address: 44.228.249.3 on destination port 80 in the environment. The following are the event details for reference:
+</p>
+
+<h3> Event Details</h3>
 
 
 
