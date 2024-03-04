@@ -358,7 +358,7 @@ The TCP SYN Flood attack can be analyzed using Wireshark, where I need to captur
 
 <p align="justify" > If you look at the summary of conversations in wireshark though, there are many single SYN packet requests from 247.222.184.68 with a destination port 80 (HTTP). Eventually, an attacker or source address: 247.222.184.68 can quickly exhaust a target's : 44.228.249.3  resources by bombarding it with SYN packets and not answering (ACK). The server will then be unable to fulfill valid client requests, which will ultimately result in a Denial-of-Service attack.</p>
 
-<p align="justify" > By analyzing the attack using Wireshark, you can gain valuable insights into the behavior of the TCP SYN Flood attack and its impact on the target system's network traffic. This information can be instrumental in understanding the attack's effectiveness, identifying potential vulnerabilities, and devising mitigation strategies.</p>
+<p align="justify" > By analyzing the attack using Wireshark, I have gained valuable insights into the behavior of the TCP SYN Flood attack and its impact on the target system's network traffic. This information can be instrumental in understanding the attack's effectiveness, identifying potential vulnerabilities, and devising mitigation strategies.</p>
 
 ## Actions Taken
 
